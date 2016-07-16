@@ -66,6 +66,7 @@ for link in links:
       temp_review_dict["comments"] = driver.execute_script("return "+review_div_script+"["+str(i)+"]"+review_script+comments_script).strip()[7:].strip()
     except:
       temp_review_dict["comments"] = ""
+    temp_review_dict["source"] "zomato"
     reviews_list_all.append(temp_review_dict)
   #for location
   driver.get(link+'/maps')
@@ -90,6 +91,9 @@ for link in links:
     rest_dict['name']=""
   rest_dict['reviews']=reviews_list_all
   all_rest.append(rest_dict)
+  with open('data.txt', 'w') as outfile:
+    json.dump(all_rest, outfile)
+  driver.quit()
 
 with open('data.txt', 'w') as outfile:
   json.dump(all_rest, outfile)
