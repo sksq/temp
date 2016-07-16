@@ -16,7 +16,7 @@ for link in links:
   wait = WebDriverWait(driver, 15)
   wait.until(EC.visibility_of_element_located((By.ID, "selectors")))
   all_reviews_script = "document.getElementById('selectors').getElementsByTagName('a')[1].click()"
-  load_script = "document.getElementsByClassName('load-more bold ttupper tac cursor-pointer fontsize2')[0].click()"
+  load_script = "document.getElementsByClassName('load-more')[0].click()"
   review_div_script = "document.getElementsByClassName('ui segments res-review-body res-review clearfix js-activity-root item-to-hide-parent stupendousact')"
   review_script = ".getElementsByClassName('ui segment clearfix')[0]"
   review_and_follow_count_script = ".getElementsByClassName('grey-text fontsize5 nowrap')[0].innerHTML"
@@ -28,15 +28,23 @@ for link in links:
   lat_long_script = "document.getElementsByClassName('mtop0')[0].getAttribute('href')"
   topics_script = "document.getElementsByClassName('res-info-estabs grey-text fontsize3')[0].textContent"
   name_script = "document.getElementsByClassName('ui large header left')[0].textContent"
+  print("\ttab trying to open")
+  time.sleep(10)
   driver.execute_script(all_reviews_script)
-  # now all reviews tab is open
+  # time.sleep(10)
+  input()
+  print("\tnow all reviews tab is open")
   while(1):
     try:
       driver.execute_script(load_script)
-      time.sleep(2)
+      # print("\tload initiated")
+      wait = WebDriverWait(driver, 15)
+      wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "load-more")))
+      # print("\tload done")
     except:
+      print("\tload done done")
       break
-  # all loaded now.
+  print("\tall loaded now.")
   reviews_list_all = []
   for i in range(len(driver.execute_script("return "+review_div_script))):
     # print(i)
@@ -66,7 +74,7 @@ for link in links:
       temp_review_dict["comments"] = driver.execute_script("return "+review_div_script+"["+str(i)+"]"+review_script+comments_script).strip()[7:].strip()
     except:
       temp_review_dict["comments"] = ""
-    temp_review_dict["source"] "zomato"
+    temp_review_dict["source"] = "zomato"
     reviews_list_all.append(temp_review_dict)
   #for location
   driver.get(link+'/maps')
@@ -91,9 +99,9 @@ for link in links:
     rest_dict['name']=""
   rest_dict['reviews']=reviews_list_all
   all_rest.append(rest_dict)
-  with open('data.txt', 'w') as outfile:
+  with open('data2.txt', 'w') as outfile:
     json.dump(all_rest, outfile)
   driver.quit()
 
-with open('data.txt', 'w') as outfile:
+with open('data2.txt', 'w') as outfile:
   json.dump(all_rest, outfile)
