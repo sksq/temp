@@ -1,0 +1,14 @@
+All reviews -> ID=selectors/a[2] //1 indexed
+	> document.getElementById("selectors").getElementsByTagName('a')[1].click()
+
+For review-div in document.getElementsByClassName("ui segments res-review-body res-review clearfix js-activity-root item-to-hide-parent stupendousact"):
+	review = review-div.getElementsByClassName('ui segment clearfix')[0]
+	review_and_follow_count = review.getElementsByClassName('grey-text fontsize5 nowrap')[0].innerHTML()
+	timestamp = review.getElementsByTagName('time')[0].getAttribute('datetime')
+	rating = review.getElementsByClassName('ttupper')[0].getAttribute('aria-label')
+	text = review.getElementsByClassName('rev-text')[0].textContent //remove "rated" from the start
+	likes = review.getElementsByClassName("left mr5 ui tiny labeled button js-btn-thank")[0].textContent
+	comments = review.getElementsByClassName("left ui tiny labeled button comment-btn-to")[0].textContent
+
+Load more- document.getElementsByClassName("load-more bold ttupper tac cursor-pointer fontsize2")[0].click()
+Load more -> div[class="load-more bold ttupper tac cursor-pointer fontsize2"]/span[1]
